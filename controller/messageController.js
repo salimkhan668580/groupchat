@@ -2,6 +2,7 @@ const wrapAsync = require("../utils/wrapAsync");
 const conversationModel = require("../model/Conversation");
 const responseHandler = require("../utils/responseHandler");
 const { default: mongoose } = require("mongoose");
+const User = require("../model/User");
 
 module.exports={
 
@@ -38,6 +39,16 @@ module.exports={
 
 
         return responseHandler.responseWithData(res, 200, 'Messages retrieved successfully', messagesAggregation);
+    }),
+
+    getUsers: wrapAsync(async (req, res) => {
+        const users = await User.find();
+        return responseHandler.responseWithData(res, 200, 'Users retrieved successfully', users);
+    }),
+    getUserDetails: wrapAsync(async (req, res) => {
+        const { id } = req.query;
+        const user = await User.findById(id).select('-password').lean();
+        return responseHandler.responseWithData(res, 200, 'Users retrieved successfully', user);
     }),
     
 

@@ -1,0 +1,32 @@
+# Socket.IO Documentation
+
+## Events
+
+### `join_room`
+
+* `data`:
+	+ `room`: The room ID to join (e.g. "user1-user2")
+
+### `send_msg`
+
+* `data`:
+	+ `senderId`: The ID of the sender
+	+ `receiverId`: The ID of the receiver
+	+ `msg`: The message to send
+
+## Rooms
+
+A room is created when two users want to communicate with each other. The room ID is created by sorting the two user IDs and concatenating them with a hyphen (e.g. "user1-user2").
+
+## Messages
+
+A message is sent when a user sends a message to another user. The message is stored in the database and is emitted to all users in the same room. The message object contains the following properties:
+
+* `senderId`: The ID of the sender
+* `receiverId`: The ID of the receiver
+* `msg`: The message text
+* `createdAt`: The timestamp when the message was sent
+
+## Examples
+
+### Joining a room

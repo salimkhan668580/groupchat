@@ -29,7 +29,7 @@ module.exports = {
     loginUser: wrapAsync(async (req, res) => {
         try {
             const { email, password } = req.body;
-            const user = await User.findOne({ email });
+            const user = await User.findOne({ email }).lean();
             if (!user) {
                 return responseHandler.responseWithError(res, 400, 'Invalid credentials');
             }
@@ -47,7 +47,12 @@ module.exports = {
                 sameSite: 'strict',
                 maxAge: 24 * 60 * 60 * 1000 
             });
-            responseHandler.responseWithData(res, 200, 'User logged in successfully', { token });
+
+            const data={
+                token,
+                user
+            }
+            responseHandler.responseWithData(res, 200, 'User logged in successfully', data);
         } catch (err) {
             responseHandler.responseWithError(res, 500, err.message);
         }
