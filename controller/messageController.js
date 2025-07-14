@@ -15,6 +15,11 @@ module.exports={
                 const senderObjId = new mongoose.Types.ObjectId(sender);
                 const receiverObjId = new mongoose.Types.ObjectId(receiver);
         const messagesAggregation=await conversationModel.aggregate([
+             {
+                $sort: {
+                    createdAt: -1
+                }
+            },
             {
                 $match: {
                     participants: { $all: [senderObjId, receiverObjId] }
@@ -35,6 +40,8 @@ module.exports={
                     lastmsg: 1
                 }
             }
+           
+            
         ]);
 
 
