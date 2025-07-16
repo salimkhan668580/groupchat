@@ -47,7 +47,7 @@ module.exports = {
                 sameSite: 'strict',
                 maxAge: 24 * 60 * 60 * 1000 
             });
-
+            
             const data={
                 token,
                 user

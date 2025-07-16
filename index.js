@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const connectDB = require('./lib/dbConnect.js');
 const socketConnect = require('./lib/socket.js');
@@ -12,9 +13,13 @@ const messageRouter = require('./routers/messsageRouter.js');
 const responseHandler = require('./utils/responseHandler.js');
 const groupRouter = require('./routers/groupRouter.js');
 
+app.use(cookieParser());
 
-connectDB();
-app.use(cors());
+connectDB(); 
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true 
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
